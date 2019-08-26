@@ -1,6 +1,8 @@
 package a1;
 
 import java.util.HashMap;
+import java.util.Set;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -26,22 +28,31 @@ public class A1Jedi {
 			scan.next(); // skip first name
 			scan.next(); // skip last name
 			int customer_products_bought = scan.nextInt();
+			Set<String> products_bought = new HashSet<String>();
 			
 			// For each customer:
-			//     - if customer bought product => number of customers for product += 1
 			//     - if customer bought product => add number bought to total bought for that product
+			//     - if customer bought product => number of customers for product += 1
+			
 			for (int k=0; k<customer_products_bought; k++) {
 				int count = scan.nextInt();
 				String product_name = scan.next();
-				
+				products_bought.add(product_name); // use set so that products aren't double counted
 				// If no customers have bought product yet, initialize hash map values.
-				// Else, add count to product count and increase unique customers by 1.
+				// Else, add count to product count.
 				if (product_count.get(product_name) == null) {
 					product_count.put(product_name, count);
-					uniq_customer_count.put(product_name, 1);
 				} else {
 					product_count.put(product_name, product_count.get(product_name)+count);
-					uniq_customer_count.put(product_name, uniq_customer_count.get(product_name)+1);
+				}
+			}
+			for (String pb : products_bought) {
+				// If no customers have bought product yet, initialize hash map values.
+				// Else, add 1 to number of unique customers.
+				if (uniq_customer_count.get(pb) == null) {
+					uniq_customer_count.put(pb, 1);
+				} else {
+					uniq_customer_count.put(pb, uniq_customer_count.get(pb) + 1);
 				}
 			}
 
