@@ -13,7 +13,7 @@ public class A1Jedi {
 		Scanner scan = new Scanner(System.in);
 
 		Map<String, Integer> product_count = new HashMap<String, Integer>(); // product : number bought
-		Map<String, Integer> uniq_customer_count = new HashMap<String, Integer>(); // product : number of customers for product
+		Map<String, Integer> uniq_customer_count = new HashMap<String, Integer>(); // product : number of customers who bought product
 		
 		// Load names of products into products array
 		int num_products = scan.nextInt();
@@ -38,10 +38,8 @@ public class A1Jedi {
 				int count = scan.nextInt();
 				String product_name = scan.next();
 				products_bought.add(product_name); // use set so that products aren't double counted
-				// If no customers have bought product yet, initialize hash map values.
-				// Else, add count to product count.
 				if (product_count.get(product_name) == null) {
-					product_count.put(product_name, count);
+					product_count.put(product_name, count); // initialize product count if none added yet
 				} else {
 					product_count.put(product_name, product_count.get(product_name)+count);
 				}
@@ -50,7 +48,7 @@ public class A1Jedi {
 				// If no customers have bought product yet, initialize hash map values.
 				// Else, add 1 to number of unique customers.
 				if (uniq_customer_count.get(pb) == null) {
-					uniq_customer_count.put(pb, 1);
+					uniq_customer_count.put(pb, 1); // initialize count of how many customers bought product if not initialized yet
 				} else {
 					uniq_customer_count.put(pb, uniq_customer_count.get(pb) + 1);
 				}
@@ -64,7 +62,7 @@ public class A1Jedi {
 			String _num_customers;
 			String _num_units;
 			if (uniq_customer_count.get(product) == null) {
-				_num_customers = "No";
+				_num_customers = "No"; // use _ to avoid conflict with variable used earlier
 				_num_units = "";
 			} else {
 				_num_customers = Integer.toString(uniq_customer_count.get(product));
